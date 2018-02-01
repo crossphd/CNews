@@ -21,9 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Helper methods related to requesting and receiving earthquake data from USGS.
- */
+
 public class QueryUtils {
 
     /** Tag for the log messages */
@@ -42,10 +40,8 @@ public class QueryUtils {
             Log.e(LOG_TAG, "Error closing input stream", e);
         }
 
-        // Extract relevant fields from the JSON response and create an {@link Event} object
         ArrayList<Article> articles = extractArticle(jsonResponse);
 
-        // Return the {@link Event}
         return articles;
     }
 
@@ -153,13 +149,9 @@ public class QueryUtils {
 
 
         } catch (JSONException e) {
-            // If an error is thrown when executing any of the above statements in the "try" block,
-            // catch the exception here, so the app doesn't crash. Print a log message
-            // with the message from the exception.
             Log.e("QueryUtils", "Problem parsing the JSON results", e);
         }
 
-        // Return the list of earthquakes
         return articles;
     }
 
