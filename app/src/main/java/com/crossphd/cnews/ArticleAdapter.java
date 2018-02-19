@@ -59,16 +59,24 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
                     R.layout.list_item, parent, false);
         }
 
+
         Article currentArticle = getItem(position);
 
-        ImageView image = (ImageView) listItemView.findViewById(R.id.article_image);
-//        new DownloadImageTask(image).execute(currentArticle.getmImageUrl());
-        Picasso.with(this.getContext())
-                .load(currentArticle.getmImageUrl())
-                .centerCrop()
-                .transform(new CircleTransform(50,0))
-                .fit()
-                .into(image);
+        ImageView image = listItemView.findViewById(R.id.article_image);
+
+        if (currentArticle != null) {
+            Picasso.with(this.getContext())
+                    .load(currentArticle.getmImageUrl())
+                    .centerCrop()
+                    .transform(new CircleTransform(50,0))
+                    .fit()
+                    .into(image);
+        }
+
+
+//        if (currentArticle != null) {
+//            new DownloadImageTask(image).execute(currentArticle.getmImageUrl());
+//        }
 
         TextView title = (TextView) listItemView.findViewById(R.id.article_title);
         title.setText(currentArticle.getmTitle());
@@ -86,26 +94,26 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
         return listItemView;
     }
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
-    }
+//    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+//        ImageView bmImage;
+//        public DownloadImageTask(ImageView bmImage) {
+//            this.bmImage = bmImage;
+//        }
+//
+//        protected Bitmap doInBackground(String... urls) {
+//            String urldisplay = urls[0];
+//            Bitmap bmp = null;
+//            try {
+//                InputStream in = new java.net.URL(urldisplay).openStream();
+//                bmp = BitmapFactory.decodeStream(in);
+//            } catch (Exception e) {
+//                Log.e("Error", e.getMessage());
+//                e.printStackTrace();
+//            }
+//            return bmp;
+//        }
+//        protected void onPostExecute(Bitmap result) {
+//            bmImage.setImageBitmap(result);
+//        }
+//    }
 }
