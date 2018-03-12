@@ -65,6 +65,10 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
         ImageView image = listItemView.findViewById(R.id.article_image);
 
         if (currentArticle != null) {
+            new DownloadImageTask(image).execute(currentArticle.getmImageUrl());
+        }
+
+        if (currentArticle != null) {
             Picasso.with(this.getContext())
                     .load(currentArticle.getmImageUrl())
                     .centerCrop()
@@ -73,10 +77,6 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
                     .into(image);
         }
 
-
-//        if (currentArticle != null) {
-//            new DownloadImageTask(image).execute(currentArticle.getmImageUrl());
-//        }
 
         TextView title = (TextView) listItemView.findViewById(R.id.article_title);
         title.setText(currentArticle.getmTitle());
@@ -94,26 +94,26 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
         return listItemView;
     }
 
-//    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-//        ImageView bmImage;
-//        public DownloadImageTask(ImageView bmImage) {
-//            this.bmImage = bmImage;
-//        }
-//
-//        protected Bitmap doInBackground(String... urls) {
-//            String urldisplay = urls[0];
-//            Bitmap bmp = null;
-//            try {
-//                InputStream in = new java.net.URL(urldisplay).openStream();
-//                bmp = BitmapFactory.decodeStream(in);
-//            } catch (Exception e) {
-//                Log.e("Error", e.getMessage());
-//                e.printStackTrace();
-//            }
-//            return bmp;
-//        }
-//        protected void onPostExecute(Bitmap result) {
-//            bmImage.setImageBitmap(result);
-//        }
-//    }
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap bmp = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                bmp = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return bmp;
+        }
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
+    }
 }
